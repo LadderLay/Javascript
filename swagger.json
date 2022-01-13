@@ -1,0 +1,1745 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "swagger接口文档",
+    "version": "1.0",
+    "title": "听我说API文档"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "browsing-controller",
+      "description": "Browsing Controller"
+    },
+    {
+      "name": "collection-controller",
+      "description": "Collection Controller"
+    },
+    {
+      "name": "comment-controller",
+      "description": "Comment Controller"
+    },
+    {
+      "name": "concern-controller",
+      "description": "Concern Controller"
+    },
+    {
+      "name": "live-order-controller",
+      "description": "Live Order Controller"
+    },
+    {
+      "name": "live-page-controller",
+      "description": "Live Page Controller"
+    },
+    {
+      "name": "login-user-info-controller",
+      "description": "Login User Info Controller"
+    },
+    {
+      "name": "share-page-controller",
+      "description": "Share Page Controller"
+    },
+    {
+      "name": "user-controller",
+      "description": "User Controller"
+    },
+    {
+      "name": "后台管理",
+      "description": "Admin Controller"
+    }
+  ],
+  "paths": {
+    "/api/v1/admin/lives": {
+      "get": {
+        "tags": [
+          "后台管理"
+        ],
+        "summary": "获取live内容列表",
+        "operationId": "listLivesUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«AdminLive»»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/admin/lives/{id}": {
+      "patch": {
+        "tags": [
+          "后台管理"
+        ],
+        "summary": "更新live内容审核状态",
+        "operationId": "updateLiveStatusUsingPATCH",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«string»"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/admin/login": {
+      "post": {
+        "tags": [
+          "后台管理"
+        ],
+        "summary": "管理员登录",
+        "operationId": "loginUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "adminLoginParam",
+            "description": "adminLoginParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/后台登录"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登录成功！",
+            "schema": {
+              "$ref": "#/definitions/Result«string»"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "账户名或密码错误，请重试！"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/admin/users": {
+      "get": {
+        "tags": [
+          "后台管理"
+        ],
+        "summary": "获取用户列表",
+        "operationId": "listUsersUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«AdminUserInfo»»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/admin/users/control": {
+      "patch": {
+        "tags": [
+          "后台管理"
+        ],
+        "summary": "修改用户权限",
+        "operationId": "checkPermissionUsingPATCH",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "userParam",
+            "description": "userParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/用户管理"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«string»"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/admin/users/{id}": {
+      "get": {
+        "tags": [
+          "后台管理"
+        ],
+        "summary": "查询用户信息（根据用户id）",
+        "operationId": "infoUserByIdUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«AdminUserInfo»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/admin/users?name={name}": {
+      "get": {
+        "tags": [
+          "后台管理"
+        ],
+        "summary": "查询用户信息（根据用户名）",
+        "operationId": "infoUserUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«AdminUserInfo»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/live/detail": {
+      "get": {
+        "tags": [
+          "live-page-controller"
+        ],
+        "summary": "liveDetail",
+        "operationId": "liveDetailUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "liveid",
+            "in": "query",
+            "description": "liveid",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«Live»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/live/recommand": {
+      "get": {
+        "tags": [
+          "live-page-controller"
+        ],
+        "summary": "LiveList",
+        "operationId": "LiveListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«Live»»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/personal/browsing": {
+      "get": {
+        "tags": [
+          "browsing-controller"
+        ],
+        "summary": "browsingList",
+        "operationId": "browsingListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "userid",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«Browsing»»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/personal/collection": {
+      "get": {
+        "tags": [
+          "collection-controller"
+        ],
+        "summary": "collectionList",
+        "operationId": "collectionListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "userid",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«Collection»»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/personal/comment": {
+      "get": {
+        "tags": [
+          "comment-controller"
+        ],
+        "summary": "commentList",
+        "operationId": "commentListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "userid",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«Comment»»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/personal/concern": {
+      "get": {
+        "tags": [
+          "concern-controller"
+        ],
+        "summary": "concernList",
+        "operationId": "concernListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "userid",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«Concern»»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/personal/info": {
+      "get": {
+        "tags": [
+          "login-user-info-controller"
+        ],
+        "summary": "userInfo",
+        "operationId": "userInfoUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "userid",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«VxUser»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/personal/myorder": {
+      "get": {
+        "tags": [
+          "live-order-controller"
+        ],
+        "summary": "liveOrderList",
+        "operationId": "liveOrderListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "userid",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«List«Order»»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/share/recommand": {
+      "get": {
+        "tags": [
+          "share-page-controller"
+        ],
+        "summary": "ShareList",
+        "operationId": "ShareListUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Result«Share»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/wx/login": {
+      "get": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "user_login",
+        "operationId": "user_loginUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "code",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "encrypteData",
+            "in": "query",
+            "description": "encrypteData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "iv",
+            "in": "query",
+            "description": "iv",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "rawData",
+            "in": "query",
+            "description": "rawData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "signature",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GlobalResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "head": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "user_login",
+        "operationId": "user_loginUsingHEAD",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "code",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "encrypteData",
+            "in": "query",
+            "description": "encrypteData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "iv",
+            "in": "query",
+            "description": "iv",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "rawData",
+            "in": "query",
+            "description": "rawData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "signature",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GlobalResult"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "user_login",
+        "operationId": "user_loginUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "code",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "encrypteData",
+            "in": "query",
+            "description": "encrypteData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "iv",
+            "in": "query",
+            "description": "iv",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "rawData",
+            "in": "query",
+            "description": "rawData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "signature",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GlobalResult"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "user_login",
+        "operationId": "user_loginUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "code",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "encrypteData",
+            "in": "query",
+            "description": "encrypteData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "iv",
+            "in": "query",
+            "description": "iv",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "rawData",
+            "in": "query",
+            "description": "rawData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "signature",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GlobalResult"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "user_login",
+        "operationId": "user_loginUsingDELETE",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "code",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "encrypteData",
+            "in": "query",
+            "description": "encrypteData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "iv",
+            "in": "query",
+            "description": "iv",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "rawData",
+            "in": "query",
+            "description": "rawData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "signature",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GlobalResult"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      },
+      "options": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "user_login",
+        "operationId": "user_loginUsingOPTIONS",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "code",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "encrypteData",
+            "in": "query",
+            "description": "encrypteData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "iv",
+            "in": "query",
+            "description": "iv",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "rawData",
+            "in": "query",
+            "description": "rawData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "signature",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GlobalResult"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "user_login",
+        "operationId": "user_loginUsingPATCH",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "code",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "encrypteData",
+            "in": "query",
+            "description": "encrypteData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "iv",
+            "in": "query",
+            "description": "iv",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "rawData",
+            "in": "query",
+            "description": "rawData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "signature",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GlobalResult"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "AdminLive": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "liveId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "liveIntro": {
+          "type": "string"
+        },
+        "livePrice": {
+          "type": "number",
+          "format": "float"
+        },
+        "liveTitle": {
+          "type": "string"
+        },
+        "liveUrl": {
+          "type": "string"
+        },
+        "postUrl": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "user": {
+          "$ref": "#/definitions/VxUser"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userName": {
+          "type": "string"
+        }
+      },
+      "title": "AdminLive"
+    },
+    "AdminUserInfo": {
+      "type": "object",
+      "properties": {
+        "avatar": {
+          "type": "string"
+        },
+        "confirm": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "userAddress": {
+          "type": "string"
+        },
+        "userCity": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userIntro": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "userTag": {
+          "type": "string"
+        },
+        "userTel": {
+          "type": "string"
+        }
+      },
+      "title": "AdminUserInfo"
+    },
+    "Browsing": {
+      "type": "object",
+      "properties": {
+        "browsingID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "share": {
+          "$ref": "#/definitions/Share"
+        },
+        "shareID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userID": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Browsing"
+    },
+    "Collection": {
+      "type": "object",
+      "properties": {
+        "collectID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "share": {
+          "$ref": "#/definitions/Share"
+        },
+        "shareID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userID": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Collection"
+    },
+    "Comment": {
+      "type": "object",
+      "properties": {
+        "commentContent": {
+          "type": "string"
+        },
+        "commentID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "share": {
+          "$ref": "#/definitions/Share"
+        },
+        "shareID": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Comment"
+    },
+    "Concern": {
+      "type": "object",
+      "properties": {
+        "concernID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "concernUserID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "user": {
+          "$ref": "#/definitions/VxUser"
+        },
+        "userID": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Concern"
+    },
+    "GlobalResult": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "ok": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "GlobalResult"
+    },
+    "Live": {
+      "type": "object",
+      "properties": {
+        "intro": {
+          "type": "string"
+        },
+        "liveID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "liveUrl": {
+          "type": "string"
+        },
+        "postUrl": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "float"
+        },
+        "title": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/VxUser"
+        },
+        "userID": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Live"
+    },
+    "Order": {
+      "type": "object",
+      "properties": {
+        "createID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "live": {
+          "$ref": "#/definitions/Live"
+        },
+        "orderID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "resourceID": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Order"
+    },
+    "Result«AdminUserInfo»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/AdminUserInfo"
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«AdminUserInfo»"
+    },
+    "Result«List«AdminLive»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AdminLive"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«List«AdminLive»»"
+    },
+    "Result«List«AdminUserInfo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AdminUserInfo"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«List«AdminUserInfo»»"
+    },
+    "Result«List«Browsing»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Browsing"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«List«Browsing»»"
+    },
+    "Result«List«Collection»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Collection"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«List«Collection»»"
+    },
+    "Result«List«Comment»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«List«Comment»»"
+    },
+    "Result«List«Concern»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Concern"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«List«Concern»»"
+    },
+    "Result«List«Live»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Live"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«List«Live»»"
+    },
+    "Result«List«Order»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Order"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«List«Order»»"
+    },
+    "Result«Live»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Live"
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«Live»"
+    },
+    "Result«Share»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Share"
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«Share»"
+    },
+    "Result«VxUser»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/VxUser"
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«VxUser»"
+    },
+    "Result«string»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Result«string»"
+    },
+    "Share": {
+      "type": "object",
+      "properties": {
+        "CreateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "approvalNum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "commentNum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "shareContent": {
+          "type": "string"
+        },
+        "shareID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "shareTitle": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/VxUser"
+        },
+        "userID": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Share"
+    },
+    "VxUser": {
+      "type": "object",
+      "properties": {
+        "avatar": {
+          "type": "string"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "confirm": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "string"
+        },
+        "occupation": {
+          "type": "string"
+        },
+        "userID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userName": {
+          "type": "string"
+        }
+      },
+      "title": "VxUser"
+    },
+    "后台登录": {
+      "type": "object",
+      "required": [
+        "password",
+        "username"
+      ],
+      "properties": {
+        "password": {
+          "type": "string",
+          "description": "用户密码"
+        },
+        "username": {
+          "type": "string",
+          "description": "登录名"
+        }
+      },
+      "title": "后台登录"
+    },
+    "用户管理": {
+      "type": "object",
+      "required": [
+        "id",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "用户id"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": "目标状态"
+        }
+      },
+      "title": "用户管理"
+    }
+  }
+}
